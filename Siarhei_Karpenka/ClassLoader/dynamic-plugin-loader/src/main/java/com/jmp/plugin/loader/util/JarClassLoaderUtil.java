@@ -3,6 +3,7 @@ package com.jmp.plugin.loader.util;
 import java.io.File;
 import java.io.FileFilter;
 import java.io.FileInputStream;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.jar.JarEntry;
@@ -28,9 +29,9 @@ public class JarClassLoaderUtil {
 
 	public static final List<String> getClassNamesFromJar(String jarName) {
 		ArrayList<String> classes = new ArrayList<String>();
+		JarInputStream jarFile = null;
 		try {
-			@SuppressWarnings("resource")
-			JarInputStream jarFile = new JarInputStream(new FileInputStream(jarName));
+			jarFile = new JarInputStream(new FileInputStream(jarName));
 			JarEntry jarEntry;
 
 			while (true) {
@@ -44,6 +45,14 @@ public class JarClassLoaderUtil {
 			}
 		} catch (Exception e) {
 			logger.error(e.getMessage(), e);
+		} finally {
+			if(jarFile != null) {
+				try {
+					jarFile.close();
+				} catch (IOException e) {
+					logger.error(e);
+				}
+			}
 		}
 		return classes;
 	}

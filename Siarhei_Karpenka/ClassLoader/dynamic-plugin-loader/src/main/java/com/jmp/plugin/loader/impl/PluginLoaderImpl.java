@@ -12,7 +12,7 @@ import org.apache.commons.io.FilenameUtils;
 import org.apache.log4j.Logger;
 
 import com.jmp.plugin.loader.PluginLoader;
-import com.jmp.plugin.loader.classloader.CustomUrlClassLoader;
+import com.jmp.plugin.loader.classloader.JarPluginUrlClassLoader;
 import com.jmp.plugin.loader.util.JarClassLoaderUtil;
 
 public class PluginLoaderImpl implements PluginLoader {
@@ -27,13 +27,13 @@ public class PluginLoaderImpl implements PluginLoader {
 	}
 	
 	private int loadClasses(File[] plugins) throws ClassNotFoundException, MalformedURLException {
-		CustomUrlClassLoader classLoader = null;
+		JarPluginUrlClassLoader classLoader = null;
 		for (int i = 0; i < plugins.length; i++) {
 		    try {
 		    	List<String> classesToLoad = JarClassLoaderUtil.getClassNamesFromJar(plugins[i].getAbsolutePath());
 		    	List<Class<?>> loadedClasses = new ArrayList<Class<?>>();
-		        URL jarUrl = new URL("jar", "", "file:" + plugins[i].getAbsolutePath()	+ "!/");
-		        classLoader = new CustomUrlClassLoader(new URL[] {jarUrl}, getClass().getClassLoader());
+		        URL jarUrl = new URL("file:" + plugins[i].getAbsolutePath());
+		        classLoader = new JarPluginUrlClassLoader(new URL[] {jarUrl}, getClass().getClassLoader());
 		        for (String classToLoad : classesToLoad) {
 		        	loadedClasses.add(classLoader.loadClass(FilenameUtils.getBaseName(classToLoad)));
 		        }
