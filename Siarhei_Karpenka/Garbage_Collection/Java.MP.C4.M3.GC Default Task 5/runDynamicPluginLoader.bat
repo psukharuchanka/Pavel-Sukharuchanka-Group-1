@@ -1,2 +1,2 @@
-java -XX:-UseParNewGC -XX:+UseConcMarkSweepGC -XX:ConcGCThreads=2 -Xms2m -Xmx18m -XX:NewSize=1m -XX:MaxNewSize=1m -XX:PermSize=24m -XX:MaxPermSize=36m -jar dynamic-plugin-loader-1.0.0-SNAPSHOT-jar-with-dependencies.jar -in d:/input 
+java -Xms2m -Xmx18m -XX:NewSize=1m -XX:MaxNewSize=1m -XX:PermSize=24m -XX:MaxPermSize=36m -XX:+UseConcMarkSweepGC -XX:ConcGCThreads=2 -jar dynamic-plugin-loader-1.0.0-SNAPSHOT-jar-with-dependencies.jar -in d:/input 
 pause
