@@ -25,15 +25,16 @@ public class App {
     public static void main(String[] args) throws AccountException, NumberFormatException, DataManagerException {
     	logger.info("Initializing bank service");
         try {
+        	logger.info("BANK SERVICE");
+	    	logger.info("create - create account");
+	    	logger.info("exchange - currency exchange");
+	    	logger.info("sort - sort accounts");
+	    	logger.info("search - search account by id");
+	    	logger.info("filter - filter accounts by currency");
+	    	logger.info("exit - exit bank service");
 	        String line = null;
 	        while (!"exit".equals(line)) {
-	        	logger.info("BANK SERVICE");
-		    	logger.info("create - create account");
-		    	logger.info("exchange - currency exchange");
-		    	logger.info("sort - sort accounts");
-		    	logger.info("search - search account by id");
-		    	logger.info("filter - filter accounts by currency");
-		    	logger.info("exit - exit bank service");
+	        	logger.info("Please, write command : ");
 	            line = reader.readLine();
 	            if (line != null && !line.isEmpty()) {
 	                processCommand(line);
@@ -113,6 +114,10 @@ public class App {
         	logger.info("Please, write account name to search : ");
         	String accountName = reader.readLine();
         	bankServiceClient.search(accountName);
+        }  else if (command.equals("exit")) {
+        	return;
+        } else {
+        	logger.info("You wrote wrong command, please try again : ");
         }
     }
 }

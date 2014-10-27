@@ -58,12 +58,18 @@ public enum BankServiceImpl implements BankService {
 			logger.error(e);
 			throw new DataManagerException(e);
 		}
+		if (accounts.getAccountMap().get(id) == null) {
+			throw new AccountException("Account (id = " + id + ") does not exist");
+		}
 		return accounts.getAccountMap().get(id);
 	}
 
 	@Override
 	public Account createAccount(final Person person, final BigDecimal amount, final Currency currency) throws AccountException, DataManagerException {
 		logger.debug("Creation account for person : " + person);
+		if(!isValidAccount(person, amount, currency)) {
+			throw new AccountException("Invalid data for account : " + person + " " + amount + " " + currency);
+		}
 		try {
 			return (Account) executorService.submit(new Callable<Account>() {
 				@Override
@@ -85,6 +91,22 @@ public enum BankServiceImpl implements BankService {
 			logger.error(e);
 			throw new DataManagerException(e);
 		}
+	}
+	
+	private boolean isValidAccount(Person person, BigDecimal amount, Currency currency) {
+		return isValidPerson(person) && isValidAmount(amount) && isValidCurrency(currency);
+	}
+
+	private boolean isValidCurrency(Currency currency) {
+		return currency != null;
+	}
+
+	private boolean isValidAmount(BigDecimal amount) {
+		return amount.compareTo(new BigDecimal("0.00")) >= 0;
+	}
+
+	private boolean isValidPerson(Person person) {
+		return person != null && !person.getName().isEmpty() && !person.getSurname().isEmpty();
 	}
 	
 	@Override
