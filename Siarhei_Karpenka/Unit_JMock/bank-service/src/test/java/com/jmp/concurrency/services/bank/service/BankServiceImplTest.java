@@ -67,7 +67,10 @@ public class BankServiceImplTest {
     
     @Test
     public void testCreateAccount() throws DataManagerException, AccountException {
-    	bankServiceInstance.createAccount(new Person("Pavel", "Sukharuchanka"), new BigDecimal(1000), Currency.USD);
+    	Account account = bankServiceInstance.createAccount(new Person("Pavel", "Sukharuchanka"), new BigDecimal(1000), Currency.USD);
+    	Account expectedResult = new Account(new Person("Pavel", "Sukharuchanka"), Currency.USD, new BigDecimal(1000));
+    	expectedResult.setId(4);
+    	assertEquals("Account has incorrect data ", expectedResult, account);
     }
 	
     @Test(expected = AccountException.class)
