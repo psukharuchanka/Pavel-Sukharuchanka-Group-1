@@ -3,6 +3,7 @@ package com.jmp.concurrency.services.bank.service.predicate;
 import java.math.BigDecimal;
 
 import com.jmp.concurrency.services.bank.service.dto.Account;
+import com.jmp.concurrency.services.bank.service.dto.Currency;
 
 
 public class AmountAccountPredicate implements AccountPredicate {
@@ -10,13 +11,24 @@ public class AmountAccountPredicate implements AccountPredicate {
 	private BigDecimal minValue = null;
 	
 	private BigDecimal maxValue = null;
+	
+	private Currency currency = null;
     
-	public AmountAccountPredicate(BigDecimal minValue, BigDecimal maxValue) {
+	public AmountAccountPredicate(Currency currency, BigDecimal minValue, BigDecimal maxValue) {
 		super();
+		this.currency = currency;
 		this.minValue = minValue;
 		this.maxValue = maxValue;
 	}
 
+	public Currency getCurrency() {
+		return currency;
+	}
+
+	public void setCurrency(Currency currency) {
+		this.currency = currency;
+	}
+	
 	public BigDecimal getMinValue() {
 		return minValue;
 	}
@@ -35,7 +47,11 @@ public class AmountAccountPredicate implements AccountPredicate {
 
 	@Override
 	public boolean apply(Account account) {
-		return account.getAmount().compareTo(minValue) >= 0 
-				&& account.getAmount().compareTo(maxValue) <= 0 ;
+		return account.getCurrency() == currency 
+				&& account.getAmount().compareTo(minValue) >= 0 
+				&& account.getAmount().compareTo(maxValue) <= 0;
 	}
+
+
+
 }

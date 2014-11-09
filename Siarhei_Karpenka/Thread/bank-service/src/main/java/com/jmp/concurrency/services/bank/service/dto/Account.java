@@ -9,7 +9,6 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlRootElement(name = "account")
 @XmlAccessorType (XmlAccessType.FIELD)
 public class Account {
-
     private Integer id;
 
     private Person person;

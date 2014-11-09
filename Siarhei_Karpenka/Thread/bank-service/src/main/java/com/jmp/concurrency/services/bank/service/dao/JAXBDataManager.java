@@ -44,9 +44,17 @@ public class JAXBDataManager implements DataManager {
 	@Override
 	public void write(final AccountMap accountMap) throws DataManagerException {
 		try {
-			jaxbMarshaller.marshal(accountMap, new File(dataFilePath));
+			File dataFile = new File(dataFilePath);
+			if(!dataFile.exists()) {
+				new File(FilenameUtils.getFullPath(dataFilePath)).mkdirs();
+				new File(dataFilePath).createNewFile();
+			}
+			jaxbMarshaller.marshal(accountMap, dataFile);
 		} catch (JAXBException e) {
 			logger.error("Unnable to marshall AccountMap", e);
+			throw new DataManagerException(e);
+		} catch (IOException e) {
+			logger.error("Unnable to create data file", e);
 			throw new DataManagerException(e);
 		}
 	}

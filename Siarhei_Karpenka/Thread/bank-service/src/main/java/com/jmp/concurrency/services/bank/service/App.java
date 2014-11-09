@@ -78,11 +78,13 @@ public class App {
 					break;
 				}
 				case AMOUNT: {
+					logger.info("Please, write currency value : ");
+					String currency = reader.readLine();
 					logger.info("Please, write min amount value : ");
 					String minValue = reader.readLine();
 					logger.info("Please, write max amount value : ");
 					String maxValue = reader.readLine();
-					filteredAccounts = bankServiceClient.filterByAmount(Integer.valueOf(minValue), Integer.valueOf(maxValue));
+					filteredAccounts = bankServiceClient.filterByAmount(currency, Integer.valueOf(minValue), Integer.valueOf(maxValue));
 					break;
 				}
 				case CURRENCY: {

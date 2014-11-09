@@ -21,7 +21,7 @@ public interface BankService {
 	
 	List<Account> filterByName(String name) throws DataManagerException;
 	
-	List<Account> filterByAmount(Integer minValue, Integer maxValue) throws DataManagerException;
+	List<Account> filterByAmount(Currency currency, Integer minValue, Integer maxValue) throws DataManagerException;
 	
 	List<Account> search(String name) throws DataManagerException;
 	

@@ -56,8 +56,9 @@ public class BankServiceClient {
 		return bankService.filterByName(name);
 	}
 	
-	public List<Account> filterByAmount(Integer minValue, Integer maxValue) throws DataManagerException {
-		return bankService.filterByAmount(minValue, maxValue);
+	public List<Account> filterByAmount(String currency, Integer minValue, Integer maxValue) throws DataManagerException {
+		Currency currencyToFilter = Currency.valueOf(currency.toUpperCase());
+		return bankService.filterByAmount(currencyToFilter, minValue, maxValue);
 	}
 	
 	public List<Account> filterByCurrency(String currency) throws DataManagerException  {

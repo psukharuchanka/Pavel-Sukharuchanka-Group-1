@@ -152,7 +152,7 @@ public enum BankServiceImpl implements BankService {
 	}
 
 	@Override
-	public List<Account> filterByAmount(Integer minValue, Integer maxValue) throws DataManagerException  {
+	public List<Account> filterByAmount(Currency currency, Integer minValue, Integer maxValue) throws DataManagerException  {
 		logger.debug("Filtering accounts by amount : min - " + minValue + " max - " + maxValue);
 		AccountMap accountMap;
 		try {
@@ -170,7 +170,7 @@ public enum BankServiceImpl implements BankService {
 			throw new DataManagerException(e);
 		}
 		return AccountPredicateFilter.filter(accountMap.getAccountMap().values(), 
-				new AmountAccountPredicate(new BigDecimal(minValue), new BigDecimal(maxValue)));
+				new AmountAccountPredicate(currency, new BigDecimal(minValue), new BigDecimal(maxValue)));
 	}
 
 	@Override
